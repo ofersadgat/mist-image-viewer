@@ -1,0 +1,1 @@
+# mist-template-app
