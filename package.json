@@ -1,7 +1,7 @@
 {
-  "name": "mist-template-app",
-  "version": "0.0.3",
-  "description": "Boilerplate for kick starting a Mist Project.",
+  "name": "mist-image-viewer",
+  "version": "0.0.4",
+  "description": "Views an image using the Mist Project.",
   "main": "dist/index.js",
   "scripts": {
     "build": "make dist",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ofersadgat/mist-template-app.git"
+    "url": "https://github.com/ofersadgat/mist-image-viewer.git"
   },
   "keywords": [
     "mist",
@@ -23,9 +23,9 @@
   "author": "Ofer Sadgat",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/ofersadgat/mist-template-app/issues"
+    "url": "https://github.com/ofersadgat/mist-image-viewer/issues"
   },
-  "homepage": "https://github.com/ofersadgat/mist-template-app",
+  "homepage": "https://github.com/ofersadgat/mist-image-viewer",
   "dependencies": {
     "babel-runtime": "^5.1.10",
     "lodash": "^3.10.1",
