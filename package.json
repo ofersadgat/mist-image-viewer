@@ -1,6 +1,6 @@
 {
   "name": "mist-image-viewer",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Views an image using the Mist Project.",
   "main": "dist/index.js",
   "scripts": {
@@ -55,5 +55,8 @@
   },
   "externalDependencies": {
     "mist": "1.0.0"
+  },
+  "dist": {
+  	"js": "https://github.com/ofersadgat/mist-image-viewer/releases/download/0.0.5/app.js",
   }
 }
