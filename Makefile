@@ -4,7 +4,7 @@ ESLINT=node_modules/.bin/eslint
 WEBPACK=node_modules/.bin/webpack
 SOURCES=$(shell find src -name "*.js")
 
-dist: $(WEBPACK) $(SOURCES) webpack.production.config.js
+dist: $(WEBPACK) $(SOURCES) webpack.production.config.js package.json
 	$(WEBPACK) --config webpack.production.config.js
 	cp package.json dist
 
