@@ -1,6 +1,29 @@
-var path = require('path');
-var webpack = require('webpack');
-var NpmPlugin = require('npm-webpack');
+
+var JsonpTemplatePlugin  = require('webpack/lib/JsonpTemplatePlugin');
+var FunctionModulePlugin = require('webpack/lib/FunctionModulePlugin');
+var NodeTargetPlugin     = require('webpack/lib/node/NodeTargetPlugin');
+var NodeTemplatePlugin   = require('webpack/lib/node/NodeTemplatePlugin');
+var LoaderTargetPlugin   = require('webpack/lib/LoaderTargetPlugin');
+
+var path                 = require('path');
+var webpack              = require('webpack');
+var NpmPlugin            = require('npm-webpack');
+
+
+var webpackNode = {
+  // do not include poly fills...
+  console: false,
+  process: false,
+  global: false,
+  buffer: false,
+  __filename: false,
+  __dirname: false
+};
+
+var webpackOutput = {
+	path: path.join(__dirname, '/dist'),
+	filename: '[name].js'
+};
 
 /**
  * This is the Webpack configuration file for local development. It contains
@@ -13,7 +36,7 @@ var NpmPlugin = require('npm-webpack');
 module.exports = {
 
   // Efficiently evaluate modules with source maps
-  devtool: 'eval-source-map',
+  devtool: 'inline-source-map',
 
   entry: {
     app: [
@@ -23,10 +46,7 @@ module.exports = {
 
   // This will not actually create a bundle.js file in ./build. It is used
   // by the dev server for dynamic hot loading.
-  output: {
-    path: path.join(__dirname, '/dist'),
-    filename: '[name].js'
-  },
+  output: webpackOutput,
 
   // Necessary plugins for hot load
   plugins: [
@@ -43,6 +63,18 @@ module.exports = {
       }
     ]
   },
+
+  target: function(compiler) {
+    compiler.apply(
+        new JsonpTemplatePlugin(webpackOutput),
+        new FunctionModulePlugin(webpackOutput),
+        new NodeTemplatePlugin(webpackOutput),
+        new NodeTargetPlugin(webpackNode),
+        new LoaderTargetPlugin('web')
+    );
+  },
+
+  node: webpackNode,
 
   // Automatically transform files with these extensions
   resolve: {

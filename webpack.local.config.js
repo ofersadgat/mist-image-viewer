@@ -3,6 +3,10 @@ var webpack = require('webpack');
 var _ = require('lodash');
 var base = require('./webpack.base.config');
 
+var webpackOutput = _.extend(base.output, {
+	publicPath: '//localhost:8000/',
+});
+
 /**
  * This is the Webpack configuration file for local development. It contains
  * local-specific configuration such as the React Hot Loader, as well as:
@@ -13,9 +17,6 @@ var base = require('./webpack.base.config');
  */
 module.exports = _.extend(base, {
 
-  // Efficiently evaluate modules with source maps
-  devtool: 'eval-source-map',
-
   entry: {
     app: [
       'webpack-dev-server/client?//localhost:8000',
@@ -25,12 +26,20 @@ module.exports = _.extend(base, {
 
   // This will not actually create a bundle.js file in ./build. It is used
   // by the dev server for dynamic hot loading.
-  output: _.extend(base.output, {
-    publicPath: '//localhost:8000/',
-  }),
+  output: webpackOutput,
 
   // Necessary plugins for hot load
   plugins: base.plugins.concat([
     new webpack.HotModuleReplacementPlugin(),
   ]),
+
+  target: function(compiler) {
+    compiler.apply(
+        new JsonpTemplatePlugin(webpackOutput),
+        new FunctionModulePlugin(webpackOutput),
+        new NodeTemplatePlugin(webpackOutput),
+        new NodeTargetPlugin(base.node),
+        new LoaderTargetPlugin('web')
+    );
+  },
 });

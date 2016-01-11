@@ -2,9 +2,8 @@ const Mist = require('mist');
 const React = require('react');
 
 const Window = Mist.Window;
-
 var file = process.argv[0];
-var mimeType = Mist.File.getMimeType(file.name);
+var mimeType = Mist.File.getMimeType(file);
 if (mimeType.indexOf('image/') === 0){
 	file.getBinary().then(function(binary){
 		var addWindow = function(base64data){
@@ -28,7 +27,7 @@ if (mimeType.indexOf('image/') === 0){
 			);
 			Mist.WindowManager.addWindow(windowJsx);
 		};
-		var base64promise = Binary.toBase64(binary);
+		var base64promise = Mist.Binary.toBase64(binary);
 		if (base64promise.then){
 			base64promise.then(addWindow);
 		} else {
